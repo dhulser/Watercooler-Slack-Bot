@@ -85,15 +85,29 @@ controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
 
-controller.hears(['hello','aloha'], ['direct_message','direct_mention','mention'], function(bot, message) {
+controller.hears(['hello'], ['direct_message','direct_mention','mention'], function(bot, message) {
     var message_options = [
-    "How was your weekend?",
-    "What are you excited about today?",
-    "What did you have for breakfast?",
-    "What is your favorite food?",
-    "What TV Shows are you watching right now?",
-    "Add Extreme to a random activity, what are the rules to your new sport?",
-    "Any vacations coming up?"
+        "What did you do last weekend?",
+        "What are you excited about today?",
+        "What did you have for breakfast?",
+        "What is your favorite food?",
+        "What TV Shows are you watching right now?",
+        "Add Extreme to a random activity, what are the rules to your new sport?",
+        "Any vacations coming up?",
+        "What was the first time you ever used a computer?",
+        "What do you want to do after you retire?",
+        "Any plans this weekend?",
+        "Who is your favorite entertainer?",
+        "Do you have any pets?",
+        "What is your favorite fad?",
+        "Who is your oldest friend? How did you meet them?",
+        "If you could have any animal as a pet, what would you have?",
+        "What is the most useful thing you own?",
+        "What is the largest group of people you've ever spoken in front of?",
+        "What is your favorite subreddit?",
+        "What is your Every Day Carry?",
+        "Outside of work, how much time do you spend on the internet per day?",
+        "What's your favorite SFW joke?"
 	]
 	var random_index = Math.floor(Math.random() * message_options.length)
 	var chosen_message = message_options[random_index]
