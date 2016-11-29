@@ -83,7 +83,7 @@ controller.on('rtm_close', function (bot) {
 
 var schedule = require('node-schedule');
 
- var message_options = [
+var message_options = [
         "Let's talk! What did you do last weekend?",
         "Let's talk! What are you excited about today?",
         "Let's talk! What did you have for breakfast?",
@@ -106,10 +106,6 @@ var schedule = require('node-schedule');
         "Let's talk! Outside of work, how much time do you spend on the internet per day?",
         "Let's talk! What's your favorite SFW joke?"
 	]
-	
-
-    
-
 
 var j = schedule.scheduleJob('* 1 * * * ', function( 
                              
