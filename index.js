@@ -105,15 +105,16 @@ var message_options = [
         "Let's talk! What is your Every Day Carry?",
         "Let's talk! Outside of work, how much time do you spend on the internet per day?",
         "Let's talk! What's your favorite SFW joke?"
-	]
+	];
 
-var j = schedule.scheduleJob('* 1 * * * ', function( 
-                             
-        var random_index = Math.floor(Math.random() * message_options.length)
-        var chosen_message = message_options[random_index]
-        bot.say(message, chosen_message);  
-       
-       ){
-           
+var j = schedule.scheduleJob('* 1 * * * ', function () {
+                            
+        var random_index = Math.floor(Math.random() * message_options.length);
+        var chosen_message = message_options[random_index];
+        bot.say(message, chosen_message)  
+        }
         
-});
+       );
+
+
+
