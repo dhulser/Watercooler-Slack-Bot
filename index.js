@@ -81,12 +81,8 @@ controller.on('rtm_close', function (bot) {
  */
 // BEGIN EDITING HERE!
 
-controller.on('bot_channel_join', function (bot, message) {
-    bot.reply(message, "I'm here!")
-});
 
-controller.hears(['hello'], ['ambient','direct_mention','mention'], function(bot, message) {
-    var message_options = [
+ var message_options = [
         "Let's talk! What did you do last weekend?",
         "Let's talk! What are you excited about today?",
         "Let's talk! What did you have for breakfast?",
@@ -112,6 +108,10 @@ controller.hears(['hello'], ['ambient','direct_mention','mention'], function(bot
 	var random_index = Math.floor(Math.random() * message_options.length)
 	var chosen_message = message_options[random_index]
 
-	bot.reply(message, chosen_message)  
+    
 
+var schedule = require('node-schedule');
+
+var j = schedule.scheduleJob('* 1 * * * ', function(){
+        bot.say(message, chosen_message);   
 });
