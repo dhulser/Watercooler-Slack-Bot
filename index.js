@@ -81,40 +81,52 @@ controller.on('rtm_close', function (bot) {
  */
 // BEGIN EDITING HERE!
 
+controller.on('bot_channel_join', function (bot, message) {
+    bot.reply(message, "I'm here!")
+});
+
+
+const botAPI = controller.spawn({
+  token: token,
+  retry: 'Infinity'
+})
+
 var schedule = require('node-schedule');
 
 var message_options = [
-        "Let's talk! What did you do last weekend?",
-        "Let's talk! What are you excited about today?",
-        "Let's talk! What did you have for breakfast?",
-        "Let's talk! What is your favorite food?",
-        "Let's talk! What TV Shows are you watching right now?",
-        "Let's talk! Add Extreme to a random activity, what are the rules to your new sport?",
-        "Let's talk! Any vacations coming up?",
-        "Let's talk! What was the first time you ever used a computer?",
-        "Let's talk! What do you want to do after you retire?",
-        "Let's talk! Any plans this weekend?",
-        "Let's talk! Who is your favorite entertainer?",
-        "Let's talk! Do you have any pets?",
-        "Let's talk! What is your favorite fad?",
-        "Let's talk! Who is your oldest friend? How did you meet them?",
-        "Let's talk! If you could have any animal as a pet, what would you have?",
-        "Let's talk! What is the most useful thing you own?",
-        "Let's talk! What is the largest group of people you've ever spoken in front of?",
-        "Let's talk! What is your favorite subreddit?",
-        "Let's talk! What is your Every Day Carry?",
-        "Let's talk! Outside of work, how much time do you spend on the internet per day?",
-        "Let's talk! What's your favorite SFW joke?"
+        "What did you do last weekend?",
+        "What are you excited about today?",
+        "What did you have for breakfast?",
+        "What is your favorite food?",
+        "What TV Shows are you watching right now?",
+        "Add Extreme to a random activity, what are the rules to your new sport?",
+        "Any vacations coming up?",
+        "What was the first time you ever used a computer?",
+        "What do you want to do after you retire?",
+        "Any plans this weekend?",
+        "Who is your favorite entertainer?",
+        "Do you have any pets?",
+        "What is your favorite fad?",
+        "Who is your oldest friend? How did you meet them?",
+        "If you could have any animal as a pet, what would you have?",
+        "What is the most useful thing you own?",
+        "What is the largest group of people you've ever spoken in front of?",
+        "What is your favorite subreddit?",
+        "What is your Every Day Carry?",
+        "Outside of work, how much time do you spend on the internet per day?",
+        "What's your favorite SFW joke?"
 	];
 
-var j = schedule.scheduleJob('* 1 * * * ', function () {
+var j = schedule.scheduleJob('9 * * * * ', function () {
                             
         var random_index = Math.floor(Math.random() * message_options.length);
-        var chosen_message = message_options[random_index];
-        bot.say(message, chosen_message)  
-        }
+        var chosen_message = message_options[random_index]
         
-       );
-
+        botAPI.startRTM((err, bot, payload) => {  
+  bot.say({text: chosen_message, channel:'C033UHJ0S'})
+})
+        
+});
+      
 
 
