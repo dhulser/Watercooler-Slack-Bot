@@ -116,7 +116,7 @@ var message_options = [
         "What's your favorite SFW joke?"
 	];
 
-var j = schedule.scheduleJob('* 1 * * * ', function () {
+var j = schedule.scheduleJob(' 9 * * * * ', function () {
                             
         var random_index = Math.floor(Math.random() * message_options.length);
         var chosen_message = message_options[random_index]
