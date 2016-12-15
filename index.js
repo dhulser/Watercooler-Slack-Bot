@@ -2,6 +2,7 @@
  * A Bot for Slack!
  */
 
+.listen(process.env.PORT || 5000)
 
 /**
  * Define a function for initiating a conversation on installation
