@@ -75,11 +75,13 @@ controller.on('rtm_close', function (bot) {
 });
 
 
+
+
+
 /**
  * Core bot logic goes here!
  */
 // BEGIN EDITING HERE!
-
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
@@ -92,40 +94,30 @@ const botAPI = controller.spawn({
 
 var schedule = require('node-schedule');
 
-var message_options = [
-        "What did you do last weekend?",
-        "What are you excited about today?",
-        "What did you have for breakfast?",
-        "What is your favorite food?",
-        "What TV Shows are you watching right now?",
-        "Add Extreme to a random activity, what are the rules to your new sport?",
-        "Any vacations coming up?",
-        "What was the first time you ever used a computer?",
-        "What do you want to do after you retire?",
-        "Any plans this weekend?",
-        "Who is your favorite entertainer?",
-        "Do you have any pets?",
-        "What is your favorite fad?",
-        "Who is your oldest friend? How did you meet them?",
-        "If you could have any animal as a pet, what would you have?",
-        "What is the most useful thing you own?",
-        "What is the largest group of people you've ever spoken in front of?",
-        "What is your favorite subreddit?",
-        "What is your Every Day Carry?",
-        "Outside of work, how much time do you spend on the internet per day?",
-        "What's your favorite SFW joke?"
-	];
+var request = require('request');
 
-var j = schedule.scheduleJob(' 9 * * * * ', function () {
-                            
-        var random_index = Math.floor(Math.random() * message_options.length);
-        var chosen_message = message_options[random_index]
-        
+var j = schedule.scheduleJob(' 1 * * * * * ', function () {
+var chosen_message;
+
+request.post(
+    'https://engine.adzerk.net/api/v2',
+    { json: { placements: [ { networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
+    function (error, response, body) {
+      if (error)
+        console.log("Error:", error);
+      else if (response.statusCode !== 200) {
+        console.log("Expected status 200, got", response.statusCode);
+	  }
+      else
+        chosen_message = response.contents[0].data.customData.chosen_message
+        console.log("OK:", JSON.stringify(body, null, 2));
+    }
+);
+
         botAPI.startRTM((err, bot, payload) => {  
-  bot.say({text: chosen_message, channel:'C033UHJ0S'})
+  bot.say({text: chosen_message, channel:"C033UHJ0S"})
 })
         
 });
       
-
 
