@@ -96,12 +96,11 @@ var schedule = require('node-schedule');
 
 var request = require('request');
 
-var j = schedule.scheduleJob(' 1 * * * * * ', function () {
-var chosen_message;
-
+var j = schedule.scheduleJob(' */5 * * * * ', function () {
+    var chosen_message;
 request.post(
     'https://engine.adzerk.net/api/v2',
-    { json: { placements: [ { networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
+    { json: { placements: [ { divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
     function (error, response, body) {
       if (error)
         console.log("Error:", error);
@@ -109,8 +108,9 @@ request.post(
         console.log("Expected status 200, got", response.statusCode);
 	  }
       else
-        chosen_message = response.contents[0].data.customData.chosen_message
+        chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
         console.log("OK:", JSON.stringify(body, null, 2));
+        
     }
 );
 
@@ -118,6 +118,8 @@ request.post(
   bot.say({text: chosen_message, channel:"C033UHJ0S"})
 })
         
-});
+}
+                            );
       
+
 
