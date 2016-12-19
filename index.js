@@ -96,7 +96,7 @@ var schedule = require('node-schedule');
 
 var request = require('request');
 
-var j = schedule.scheduleJob(' */5 * * * * ', function () {
+var j = schedule.scheduleJob(' */1 * * * * ', function () {
     var chosen_message;
 request.post(
     'https://engine.adzerk.net/api/v2',
@@ -108,18 +108,29 @@ request.post(
         console.log("Expected status 200, got", response.statusCode);
 	  }
       else
-        chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
         console.log("OK:", JSON.stringify(body, null, 2));
-        
+        console.log('||||' + JSON.stringify(response.body.decisions.div1.impressionUrl))
+        chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
+
+
+          impression = response.body.decisions.div1.impressionUrl
+  request(impression, function (error, response, body) {
+      if (!error && response.statusCode == 200) {  }
+      
     }
 );
 
         botAPI.startRTM((err, bot, payload) => {  
   bot.say({text: chosen_message, channel:"C033UHJ0S"})
+  
+
+  
 })
         
 }
-                            );
+                            )
+})
+        ;
       
 
 
