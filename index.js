@@ -126,14 +126,20 @@ request.post(                    //Find the time the last message was posted, se
         var timestamp = time.messages[0].ts     // find Slack timestamp
         var milliseconds = (new Date).getTime(); // find epoch timestamp
         var currenttime = (milliseconds/1000) // convert epoch to seconds
-        var lastmessagedelay = timestamp-currenttime; // calculate time since last message
+        var lastmessagedelay = currenttime-timestamp; // calculate time since last message
+        var timetowait = 120
+        var postmessage = (lastmessagedelay > timetowait) ? "Post":"Dont Post";
 
             console.log('----currenttime-------->'+ currenttime)
             console.log('----slacktimestamp----->'+ timestamp)
             console.log('-----seconds since last message-------->'+ lastmessagedelay)
-            
-        })
+            console.log('-----time to wait-------->' + timetowait)
+            console.log('-----lastmessagedelay - time to wait -------->' + lastmessagedelay-timetowait)
+            console.log('----TF-------' + postmessage)
 
+if (postmessage == "Post"){
+    console.log(`---------test passes -------`)
+    
 request.post(
     'https://engine.adzerk.net/api/v2',
     { json: { placements: [ { divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
@@ -191,11 +197,12 @@ const botAPI = controller.spawn({
             
                   })
   
+  })
   
-  
-        
-}
-                            )
+            })
+            
+    }})
 })
-})
+
+
         ;
