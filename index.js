@@ -98,10 +98,12 @@ var request = require('request');
 
 var j = schedule.scheduleJob(' */1 * * * * ', function () {
     var chosen_message;
+        
 request.post(
     'https://engine.adzerk.net/api/v2',
     { json: { placements: [ { divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
     function (error, response, body) {
+        
       if (error)
         console.log("Error:", error);
       else if (response.statusCode !== 200) {
@@ -109,26 +111,43 @@ request.post(
 	  }
       else
         console.log("OK:", JSON.stringify(body, null, 2));
-        console.log('||||' + JSON.stringify(response.body.decisions.div1.impressionUrl))
         chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
 
-
-          impression = response.body.decisions.div1.impressionUrl
+        impression = response.body.decisions.div1.impressionUrl
   request(impression, function (error, response, body) {
       if (!error && response.statusCode == 200) {  }
       
     }
-);
-
-        botAPI.startRTM((err, bot, payload) => {  
-  bot.say({text: chosen_message, channel:"C033UHJ0S"})
+)
   
+botAPI.startRTM((err, bot, payload) => {  
+            bot.say({text: chosen_message, channel:"C033UHJ0S"}) 
+            
+              setTimeout(function(){console.log('hihihi')}, 500)
 
-  
+  request.post(
+    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
+        function (error, response, body) {
+    if (error)
+        console.log("Error:", error)
+    else
+        var time = JSON.parse(response.body)
+        var timestamp = time.messages[0].ts
+        console.log(timestamp)
+          
+            bot.api.reactions.add({
+                 timestamp: timestamp,
+                 channel: "C033UHJ0S",
+                 name: 'thumbsup'})
+            bot.api.reactions.add({
+                 timestamp: timestamp,
+                 channel: "C033UHJ0S",
+                 name: 'thumbsdown'})                
 })
         
 }
                             )
+})
 })
         ;
       
