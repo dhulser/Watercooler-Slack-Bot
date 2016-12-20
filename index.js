@@ -82,6 +82,11 @@ controller.on('rtm_close', function (bot) {
  * Core bot logic goes here!
  */
 // BEGIN EDITING HERE!
+
+var schedule = require('node-schedule');
+var request = require('request');
+
+
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
@@ -92,13 +97,43 @@ const botAPI = controller.spawn({
   retry: 'Infinity'
 })
 
-var schedule = require('node-schedule');
 
-var request = require('request');
+
+
+
 
 var j = schedule.scheduleJob(' */1 * * * * ', function () {
+    
     var chosen_message;
+    
+    controller.on('bot_channel_join', function (bot, message) {
+    bot.reply(message, "I'm here!")
+});
+
+
+const botAPI = controller.spawn({
+  token: token,
+  retry: 'Infinity'
+})
         
+request.post(                    //Find the time the last message was posted, set to lastmessagedelay
+    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
+        function (error, response, body) {
+    if (error)
+        console.log("Error:", error)
+    else
+        var time = JSON.parse(response.body)
+        var timestamp = time.messages[0].ts     // find Slack timestamp
+        var milliseconds = (new Date).getTime(); // find epoch timestamp
+        var currenttime = (milliseconds/1000) // convert epoch to seconds
+        var lastmessagedelay = timestamp-currenttime; // calculate time since last message
+
+            console.log('----currenttime-------->'+ currenttime)
+            console.log('----slacktimestamp----->'+ timestamp)
+            console.log('-----seconds since last message-------->'+ lastmessagedelay)
+            
+        })
+
 request.post(
     'https://engine.adzerk.net/api/v2',
     { json: { placements: [ { divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
@@ -120,10 +155,19 @@ request.post(
     }
 )
   
-botAPI.startRTM((err, bot, payload) => {  
+  controller.on('bot_channel_join', function (bot, message) {
+    bot.reply(message, "I'm here!")
+});
+
+
+const botAPI = controller.spawn({
+  token: token,
+  retry: 'Infinity'
+})
+
+            botAPI.startRTM((err, bot, payload) => {  
             bot.say({text: chosen_message, channel:"C033UHJ0S"}) 
-            
-              setTimeout(function(){console.log('hihihi')}, 500)
+            setTimeout(function(){console.log('hihihi')}, 500)
 
   request.post(
     'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
@@ -133,23 +177,25 @@ botAPI.startRTM((err, bot, payload) => {
     else
         var time = JSON.parse(response.body)
         var timestamp = time.messages[0].ts
-        console.log(timestamp)
-          
+
             bot.api.reactions.add({
                  timestamp: timestamp,
                  channel: "C033UHJ0S",
                  name: 'thumbsup'})
+            setTimeout(function(){console.log('waiting...')}, 250)
             bot.api.reactions.add({
                  timestamp: timestamp,
                  channel: "C033UHJ0S",
-                 name: 'thumbsdown'})                
-})
+                 name: 'thumbsdown'})   
+            
+            
+                  })
+  
+  
+  
         
 }
                             )
 })
 })
         ;
-      
-
-
