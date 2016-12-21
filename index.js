@@ -122,7 +122,7 @@ request.post(                    //Find the time the last message was posted, se
     if (error)
         console.log("Error:", error)
     else
-        var time = JSON.parse(response.body)
+        var time = JSON.parse(response.body);
         var timestamp = time.messages[0].ts     // find Slack timestamp
         var milliseconds = (new Date).getTime(); // find epoch timestamp
         var currenttime = (milliseconds/1000) // convert epoch to seconds
