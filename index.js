@@ -196,7 +196,7 @@ const botAPI = controller.spawn({
                          timestamp: timestamp,
                          channel: "C033UHJ0S",
                          name: 'thumbsdown'})  
-                                }, 0)
+                                }, 250)
                   })
   
   })
