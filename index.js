@@ -123,8 +123,6 @@ request.post(                    //Find the time the last message was posted, se
         console.log("Error:", error)
     else
         var time = JSON.parse(response.body);
-        var messages = JSON.parse(response.body).messages;  
-        console.log(messages)    
         var timestamp = time.messages[0].ts     // find Slack timestamp
         var milliseconds = (new Date).getTime(); // find epoch timestamp
         var currenttime = (milliseconds/1000) // convert epoch to seconds
@@ -190,12 +188,12 @@ const botAPI = controller.spawn({
                  timestamp: timestamp,
                  channel: "C033UHJ0S",
                  name: 'thumbsup'})
-            setTimeout(function(){console.log('waiting...')}, 250)
-            bot.api.reactions.add({
+            setTimeout(function(
+                            bot.api.reactions.add({
                  timestamp: timestamp,
                  channel: "C033UHJ0S",
-                 name: 'thumbsdown'})   
-            
+                 name: 'thumbsdown'})  
+                      ){console.log('waiting...')}, 0)
             
                   })
   
