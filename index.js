@@ -127,7 +127,7 @@ request.post(                    //Find the time the last message was posted, se
         var milliseconds = (new Date).getTime(); // find epoch timestamp
         var currenttime = (milliseconds/1000) // convert epoch to seconds
         var lastmessagedelay = currenttime-timestamp; // calculate time since last message
-        var timetowait = 3600
+        var timetowait = 60
         var postmessage = (lastmessagedelay > timetowait) ? "Post":"Dont Post";
 
             console.log('----currenttime-------->'+ currenttime)
