@@ -83,6 +83,9 @@ controller.on('rtm_close', function (bot) {
  */
 // BEGIN EDITING HERE!
 
+var date = new Date()
+console.log(date.toLocaleTimeString());
+
 var schedule = require('node-schedule');
 var request = require('request');
 
