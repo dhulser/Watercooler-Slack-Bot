@@ -188,13 +188,12 @@ const botAPI = controller.spawn({
                  timestamp: timestamp,
                  channel: "C033UHJ0S",
                  name: 'thumbsup'})
-            setTimeout(function(
-                            bot.api.reactions.add({
-                 timestamp: timestamp,
-                 channel: "C033UHJ0S",
-                 name: 'thumbsdown'})  
-                      ){console.log('waiting...')}, 0)
-            
+            setTimeout(function(){
+                bot.api.reactions.add({
+                         timestamp: timestamp,
+                         channel: "C033UHJ0S",
+                         name: 'thumbsdown'})  
+                                }, 0)
                   })
   
   })
