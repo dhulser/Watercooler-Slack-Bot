@@ -105,7 +105,7 @@ const botAPI = controller.spawn({
 
 
 
-var j = schedule.scheduleJob(' */1 9-16 * * 1-6 ', function () {
+var j = schedule.scheduleJob(' */1 9-14 * * * ', function () {
     
     var chosen_message;
     
