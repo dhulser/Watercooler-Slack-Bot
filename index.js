@@ -105,7 +105,7 @@ const botAPI = controller.spawn({
 
 
 
-var j = schedule.scheduleJob(' */1 9-14 * * * ', function () {
+var j = schedule.scheduleJob(' */1 9-14 * * 1-5 ', function () {
     
     var chosen_message;
     
@@ -120,7 +120,7 @@ const botAPI = controller.spawn({
 })
         
 request.post(                    //Find the time the last message was posted, set to lastmessagedelay
-    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
+    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -175,11 +175,11 @@ const botAPI = controller.spawn({
 })
 
             botAPI.startRTM((err, bot, payload) => {  
-            bot.say({text: chosen_message, channel:"C033UHJ0S"}) 
+            bot.say({text: chosen_message, channel:"C3P05V49W"}) 
             setTimeout(function(){console.log('hihihi')}, 500)
 
   request.post(
-    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
+    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -189,12 +189,12 @@ const botAPI = controller.spawn({
 
             bot.api.reactions.add({
                  timestamp: timestamp,
-                 channel: "C033UHJ0S",
+                 channel: "C3P05V49W",
                  name: 'thumbsup'})
             setTimeout(function(){
                 bot.api.reactions.add({
                          timestamp: timestamp,
-                         channel: "C033UHJ0S",
+                         channel: "C3P05V49W",
                          name: 'thumbsdown'})  
                                 }, 250)
                   })
