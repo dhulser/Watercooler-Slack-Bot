@@ -145,7 +145,14 @@ if (postmessage == "Post"){
     
 request.post(
     'https://engine.adzerk.net/api/v2',
-    { json: { placements: [ { divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] } ] } },
+    { json: { 
+        placements: [ 
+                {divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] }
+                    ],
+        user: {key: "ue1-d1f00b07c1a84fe880efa9232dc2296e"}
+            }
+    },
+    
     function (error, response, body) {
         
       if (error)
