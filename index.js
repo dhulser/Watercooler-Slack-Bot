@@ -108,7 +108,7 @@ controller.hears(['give me a question','question','give us a question'], 'direct
         placements: [ 
                 {divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] }
                     ],
-        user: {key: "ue1-d1f00b07c1a84fe880efa9232dc2296e"}
+        user: {key: "ue1-8237b4ed067542f68715ad0e2556de45"}
             }
     },
     
