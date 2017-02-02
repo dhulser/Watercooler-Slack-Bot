@@ -84,7 +84,7 @@ controller.on('rtm_close', function (bot) {
 // BEGIN EDITING HERE!
 
 var date = new Date()
-console.log(date.toLocaleTimeString());
+console.log('------timestamp-----' + date.toLocaleTimeString());
 
 var schedule = require('node-schedule');
 var request = require('request');
@@ -100,12 +100,67 @@ const botAPI = controller.spawn({
   retry: 'Infinity'
 })
 
+controller.hears(['give me a question','question','give us a question'], 'direct_mention,mention', function(bot, message){
+    
+    request.post(
+    'https://engine.adzerk.net/api/v2',
+    { json: { 
+        placements: [ 
+                {divName: "div1", networkId: 9820, siteId: 687249, adTypes: [20] }
+                    ],
+        user: {key: "ue1-d1f00b07c1a84fe880efa9232dc2296e"}
+            }
+    },
+    
+    function (error, response, body) {
+        
+      if (error)
+        console.log("Error:", error);
+      else if (response.statusCode !== 200) {
+        console.log("Expected status 200, got", response.statusCode);
+	  }
+      else
+        console.log("OK:", JSON.stringify(body, null, 2));
+        chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
+        bot.say({text: chosen_message, channel:"C3P05V49W"}) 
 
 
+        impression = response.body.decisions.div1.impressionUrl
+            request(impression, function (error, response, body) {
+            if (!error && response.statusCode == 200) {  }
+                                                                 }
+                    ) 
+            
+            request.post(
+    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
+        function (error, response, body) {
+    if (error)
+        console.log("Error:", error)
+    else
+        var time = JSON.parse(response.body)
+        var timestamp = time.messages[0].ts
+
+            bot.api.reactions.add({
+                 timestamp: timestamp,
+                 channel: "C3P05V49W",
+                 name: 'thumbsup'})
+            setTimeout(function(){
+                bot.api.reactions.add({
+                         timestamp: timestamp,
+                         channel: "C3P05V49W",
+                         name: 'thumbsdown'})  
+                                }, 250)
+                  })
+            
+            
+            
+}
+)
+}
+                 )
 
 
-
-var j = schedule.scheduleJob(' */1 9-14 * * 1-5 ', function () {
+    var j = schedule.scheduleJob(' */1 9-14 * * 1-5 ', function () {
     
     var chosen_message;
     
@@ -119,8 +174,8 @@ const botAPI = controller.spawn({
   retry: 'Infinity'
 })
         
-request.post(                    //Find the time the last message was posted, set to lastmessagedelay
-    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
+request.post(         //Find the time the last message was posted, set to lastmessagedelay
+    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&count=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -130,7 +185,7 @@ request.post(                    //Find the time the last message was posted, se
         var milliseconds = (new Date).getTime(); // find epoch timestamp
         var currenttime = (milliseconds/1000) // convert epoch to seconds
         var lastmessagedelay = currenttime-timestamp; // calculate time since last message
-        var timetowait = 3600
+        var timetowait = 30
         var postmessage = (lastmessagedelay > timetowait) ? "Post":"Dont Post";
 
             console.log('----currenttime-------->'+ currenttime)
@@ -211,7 +266,4 @@ const botAPI = controller.spawn({
             })
             
     }})
-})
-
-
-        ;
+});
