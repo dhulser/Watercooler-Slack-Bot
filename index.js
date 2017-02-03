@@ -122,7 +122,7 @@ controller.hears(['give me a question','question','give us a question'], 'direct
       else
         console.log("OK:", JSON.stringify(body, null, 2));
         chosen_message = response.body.decisions.div1.contents[0].data.customData.chosen_message
-        bot.say({text: chosen_message, channel:"C3P05V49W"}) 
+        bot.say({text: chosen_message, channel:"C033UHJ0S"}) 
 
 
         impression = response.body.decisions.div1.impressionUrl
@@ -132,7 +132,7 @@ controller.hears(['give me a question','question','give us a question'], 'direct
                     ) 
             
             request.post(
-    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
+    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -142,22 +142,20 @@ controller.hears(['give me a question','question','give us a question'], 'direct
 
             bot.api.reactions.add({
                  timestamp: timestamp,
-                 channel: "C3P05V49W",
-                 name: 'thumbsup'})
+                 channel: "C033UHJ0S",
+                 name: 'thumbsup'});
             setTimeout(function(){
                 bot.api.reactions.add({
                          timestamp: timestamp,
-                         channel: "C3P05V49W",
+                         channel: "C033UHJ0S",
                          name: 'thumbsdown'})  
-                                }, 250)
-                  })
+                                }, 250);
+                  });
             
             
             
-}
-)
-}
-                 )
+});
+});
 
 
     var j = schedule.scheduleJob(' */1 9-14 * * 1-5 ', function () {
@@ -175,7 +173,7 @@ const botAPI = controller.spawn({
 })
         
 request.post(         //Find the time the last message was posted, set to lastmessagedelay
-    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&count=1&token=' + process.env.TOKEN,
+    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&count=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -237,11 +235,11 @@ const botAPI = controller.spawn({
 })
 
             botAPI.startRTM((err, bot, payload) => {  
-            bot.say({text: chosen_message, channel:"C3P05V49W"}) 
+            bot.say({text: chosen_message, channel:"C033UHJ0S"}) 
             setTimeout(function(){console.log('hihihi')}, 500)
 
   request.post(
-    'https://slack.com/api/channels.history?channel=C3P05V49W&pretty=1&token=' + process.env.TOKEN,
+    'https://slack.com/api/channels.history?channel=C033UHJ0S&pretty=1&token=' + process.env.TOKEN,
         function (error, response, body) {
     if (error)
         console.log("Error:", error)
@@ -251,12 +249,12 @@ const botAPI = controller.spawn({
 
             bot.api.reactions.add({
                  timestamp: timestamp,
-                 channel: "C3P05V49W",
+                 channel: "C033UHJ0S",
                  name: 'thumbsup'})
             setTimeout(function(){
                 bot.api.reactions.add({
                          timestamp: timestamp,
-                         channel: "C3P05V49W",
+                         channel: "C033UHJ0S",
                          name: 'thumbsdown'})  
                                 }, 250)
                   })
